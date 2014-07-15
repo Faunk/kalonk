@@ -1,0 +1,65 @@
+1~# Update ini dulu
+
+yum update
+yum groupinstall "Development Tools"
+
+2~# install gcc & libpcap
+
+yum -y install gcc*
+yum -y install libpcap*
+
+3~# download softher dulu extrack dan install
+
+wget http://www.softether-download.com/files/softether/v2.00-9387-rtm-2013.09.16-tree/Linux/SoftEther%20VPN%20Server/32bit%20-%20Intel%20x86/softether-vpnserver-v2.00-9387-rtm-2013.09.16-linux-x86-32bit.tar.gz
+tar xzvf softether-vpnserver-v2.00-9387-rtm-2013.09.16-linux-x86-32bit.tar.gz
+cd vpnserver
+make
+
+# pilih 1 dan 1
+
+4~# pindah ke directory /usr/local/ dan buat startup scriptnya
+
+cd
+mv vpnserver /usr/local
+cd /usr/local/vpnserver/
+chmod 600 *
+chmod 700 vpncmd
+chmod 700 vpnserver
+nano /etc/init.d/vpnserver
+
+# masukan script ini
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#!/bin/sh
+# chkconfig: 2345 99 01
+# description: SoftEther VPN Server
+DAEMON=/usr/local/vpnserver/vpnserver
+LOCK=/var/lock/subsys/vpnserver
+test -x $DAEMON || exit 0
+case "$1" in
+start)
+$DAEMON start
+touch $LOCK
+;;
+stop)
+$DAEMON stop
+rm $LOCK
+;;
+restart)
+$DAEMON stop
+sleep 3
+$DAEMON start
+;;
+*)
+echo "Usage: $0 {start|stop|restart}"
+exit 1
+esac
+exit 0
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# chmod 755 /etc/init.d/vpnserver
+/sbin/chkconfig --add vpnserver
+/etc/init.d/vpnserver start
+
+* Jika Instalasi sukses ada tulisan " Softherher VPN Service Started "
+
