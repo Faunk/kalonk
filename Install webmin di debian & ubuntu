@@ -1,0 +1,18 @@
+pertama update dulu
+
+$ apt-get update
+
+kedua install ini
+
+$ apt-get install apt-show-versions libapt-pkg-perl libauthen-pam-perl libio-pty-perl libnet-ssleay-perl
+
+download .deb debian 
+
+$ wget http://kalonk-network.tk/install/webmin-debian.deb
+
+lalu install
+
+$ sudo dpkg -i webmin_1.630_all.deb
+$ sudo apt-get install -f
+
+Selesai
