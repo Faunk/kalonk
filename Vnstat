@@ -1,0 +1,64 @@
+1. install VNSTAT
+wget http://humdi.net/vnstat/vnstat-1.11.tar.gz
+tar xzvf vnstat-1.11.tar.gz
+cd vnstat-1.11
+yum -y install gcc*
+make
+make install
+
+ 2. service untuk VNSTAT
+download and install daemon
+cd /etc/init.d
+wget http://humdi.net/vnstat/init.d/centos/vnstat
+chmod a+x vnstat
+chkconfig --add vnstat
+
+3. seting vnstat
+ jika anda menggunakan virtualisasi XEN KVM tidak perlu melakukan ini
+tetapi jika anda menggunakan openvz sesuaikan inteface vnstat
+
+edit : bagian berikut
+nano /etc/vnstat.conf
+terserah mau pakek vim ato nano sama saja
+
+ " Interface "eth0" rubah jadi Interface "venet0"   "
+
+
+ nah kalo sudah kita cek apakah service udah nya balum
+caranya
+
+service vnstat start
+service vnstat stop
+service vnstat restart
+kalo uda [OK]
+
+4. GUI vnstat lewat php
+pastiin php sudah terinstall
+yum -y install php php-pear
+kemudian kita masukan vnstat ke vnstat php frontend
+cd
+wget http://www.sqweek.com/sqweek/files/vnstat_php_frontend-1.5.1.tar.gz
+tar xzvf vnstat_php_frontend-1.5.1.tar.gz
+cd vnstat_php_frontend-1.5.1
+mkdir /var/www/html/vnstat
+cp -r . /var/www/html/vnstat
+cd /var/www/html/vnstat
+ edit config
+masukan perintah berikut :
+nano config.php
+Edit config.php,
+ganti Network interface ke venet0
+kemudian edit juga bagian ini
+
+
+$language = 'en';
+$iface_list = array('venet0', 'sixxs');
+$iface_title['venet0'] = 'Internal';
+$data_dir = '/var/lib/vnstat/';
+Perhatikan Gambar
+
+DONE !!!
+reboot vps anda
+reboot
+kemudian cek di
+http://ip_server/vnstat
