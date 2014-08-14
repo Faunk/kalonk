@@ -1,0 +1,32 @@
+1. Grab Newest Cmake
+wget http://www.cmake.org/files/v2.8/cmake-2.8.12.tar.gz
+2. Extract it
+tar xvzf cmake*.tar.gz
+3. Entering cmake folder
+cd cmake*
+4. Installing Dependency 
+yum -y install gcc*
+5. Configuring Cmake
+./bootstrap --prefix=/usr
+if you face some dependency failure, please enter this
+yum install lib*
+yum update
+6. Compiling Cmake & Create badvpn-build folder
+gmake
+gmake install
+mkdir badvpn-build
+7. Entering Badvpn Build folder
+cd badvpn-build
+8. Grab newest Badvpn and Extract it
+wget https://badvpn.googlecode.com/files/badvpn-1.999.128.tar.bz2
+tar xf badvpn-1.999.128.tar.bz2
+9. Entering Badvpn folder
+cd bad*
+10. Finishing Touch 
+cmake -DBUILD_NOTHING_BY_DEFAULT=1 -DBUILD_UDPGW=1
+make install
+Starting BADVPN :
+badvpn-udpgw --listen-addr 127.0.0.1:7300 > /dev/null &
+DONE !!
+
+#################FINISH###############
