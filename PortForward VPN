@@ -1,0 +1,7 @@
+wget zen4u.party/portfwd.py
+wget zen4u.party/port_forward.py
+chmod +x portfwd.py
+chmod +x port_forward.py
+sed -i "1 a\python /root/portfwd.py 443 1194 &" /etc/rc.local
+python /root/portfwd.py 443 1194 &
+reboot
